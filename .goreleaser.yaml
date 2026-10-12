@@ -1,0 +1,48 @@
+version: 2
+project_name: sahran
+
+before:
+  hooks:
+    - go vet ./...
+    - go test ./...
+
+builds:
+  - id: sahran
+    main: .
+    binary: sahran
+    env: [CGO_ENABLED=0]
+    goos: [linux]
+    goarch: [amd64, arm64]
+    ldflags:
+      - -s -w -X main.version={{ .Version }}
+
+archives:
+  - formats: [tar.gz]
+    name_template: "sahran_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    files: [README.md, LICENSE]
+
+checksum:
+  name_template: checksums.txt
+
+nfpms:
+  - id: packages
+    package_name: sahran
+    homepage: https://github.com/Mina-Sayed/sahran
+    maintainer: Mina Sayed
+    description: Keep your AI agents running with the laptop lid closed.
+    license: MIT
+    formats: [deb, rpm, archlinux]
+    bindir: /usr/bin
+    contents:
+      - src: packaging/sahran.service
+        dst: /usr/lib/systemd/user/sahran.service
+
+changelog:
+  use: github
+  filters:
+    exclude: ["^docs:", "^test:", "^chore:"]
+
+release:
+  github:
+    owner: Mina-Sayed
+    name: sahran

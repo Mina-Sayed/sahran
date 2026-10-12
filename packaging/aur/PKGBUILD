@@ -1,0 +1,33 @@
+# Maintainer: Mina-Sayed <https://github.com/Mina-Sayed>
+pkgname=sahran
+pkgver=0.2.0
+pkgrel=1
+pkgdesc="Keep your AI agents running with the laptop lid closed"
+arch=('x86_64' 'aarch64')
+url="https://github.com/Mina-Sayed/sahran"
+license=('MIT')
+depends=('systemd')
+optdepends=('networkmanager: hotspot fallback'
+            'power-profiles-daemon: power saver while the lid is closed'
+            'libnotify: desktop notifications')
+makedepends=('go')
+source=("$pkgname-$pkgver.tar.gz::$url/archive/refs/tags/v$pkgver.tar.gz")
+sha256sums=('SKIP') # run `updpkgsums` after tagging
+
+build() {
+  cd "$pkgname-$pkgver"
+  export CGO_ENABLED=0 GOFLAGS="-trimpath -mod=readonly"
+  go build -ldflags "-s -w -X main.version=$pkgver" -o sahran .
+}
+
+check() {
+  cd "$pkgname-$pkgver"
+  go test ./...
+}
+
+package() {
+  cd "$pkgname-$pkgver"
+  install -Dm755 sahran "$pkgdir/usr/bin/sahran"
+  install -Dm644 packaging/sahran.service "$pkgdir/usr/lib/systemd/user/sahran.service"
+  install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+}

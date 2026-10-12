@@ -1,0 +1,12 @@
+[Unit]
+Description=sahran - keep AI agents running with the lid closed
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/sahran daemon
+ExecStopPost=/usr/bin/sahran resume
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=default.target
