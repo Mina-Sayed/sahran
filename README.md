@@ -117,5 +117,4 @@ Issues and PRs are welcome. Start with [CONTRIBUTING.md](CONTRIBUTING.md). Maint
 [MIT](LICENSE)
 
 ## Credits
-
-Inspired by a post from Krish Garg about a macOS app that keeps agents running with the lid closed. The logo text is converted to outlines from DM Serif Display, Amiri and Lato (SIL Open Font License). See [docs/logo](docs/logo).
+Display, Amiri and Lato (SIL Open Font License). See [docs/logo](docs/logo).
