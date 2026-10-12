@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.3.0
 - `t3code` and `claude-desktop` are watched by default.
 - Helper daemons that outlive the session (`codex app-server`, `opencode serve`) are ignored by default. If a `serve` session should keep the laptop awake, remove `serve` from `ignore_args` in Settings.
 
